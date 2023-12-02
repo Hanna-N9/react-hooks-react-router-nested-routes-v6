@@ -1,32 +1,20 @@
-import { useState, useEffect } from "react";
-import UserCard from "../components/UserCard";
-import NavBar from "../components/NavBar";
+import { useParams, useOutletContext } from "react-router-dom";
 
-function Home() {
-  const [users, setUsers] = useState([]);
+function UserProfile() {
+  const params = useParams();
+  const users = useOutletContext();
 
-  useEffect(() =>{
-    fetch("http://localhost:4000/users")
-      .then(r => r.json())
-      .then(data => setUsers(data))
-      .catch(error => console.error(error));
-  }, []);
-  
-  const userList = users.map(user =>{
-    return <UserCard key={user.id} user={user}/>;
-  });
+  const user = users.find(user => user.id === parseInt(params.id));
+
+  if (!user) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
-    <>
-      <header>
-        <NavBar />
-      </header>
-      <main>
-        <h1>Home!</h1>
-        {userList}
-      </main>
-    </>
+    <aside>
+      <h1>{user.name}</h1>
+    </aside>
   );
-};
+}
 
-export default Home;
+export default UserProfile;
