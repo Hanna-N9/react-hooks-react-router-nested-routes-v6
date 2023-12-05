@@ -6,10 +6,6 @@ function UserProfile() {
 
   const user = users.find(user => user.id === parseInt(params.id));
 
-  if (!user) {
-    return <h1>Loading...</h1>;
-  }
-
   return (
     <aside>
       <h1>{user.name}</h1>

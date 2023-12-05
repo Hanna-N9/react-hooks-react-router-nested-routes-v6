@@ -1,20 +1,17 @@
-import { useParams, useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
+import UserCard from "../components/UserCard";
 
-function UserProfile() {
-  const params = useParams();
+function Home() {
   const users = useOutletContext();
-
-  const user = users.find(user => user.id === parseInt(params.id));
-
-  if (!user) {
-    return <h1>Loading...</h1>;
-  }
+  const userList = users.map(user => <UserCard key={user.id} user={user} />);
 
   return (
-    <aside>
-      <h1>{user.name}</h1>
-    </aside>
+    <main>
+      <h1>Home!</h1>
+      <Outlet context={users} />
+      {userList}
+    </main>
   );
 }
 
-export default UserProfile;
+export default Home;
